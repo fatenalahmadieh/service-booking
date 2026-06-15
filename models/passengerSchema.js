@@ -1,5 +1,3 @@
-const { default: mongoose } = require("mongoose");
-
 const passengerSchema = new mongoose.Schema({
     fullName : {
         type: String,
