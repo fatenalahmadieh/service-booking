@@ -5,45 +5,40 @@ const flightSchema=new Schema({
         type:String,
         required:true,
     },
-    date:{
+    airline:{
+        type:String,
+        required:true,
+    },
+    departureAirport:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Airport"
+    },
+    arrivalAirport: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Airport"
+    },
+    departureTime: {
         type:Date,
-        required:true,
-    },
-    capacity:{
-        type:Number,
-        required:true,
-    },
-    airplane:{
-        type:String,
-        required:true,
-    },
-    airport:{
-        type:String,
         required:true,
     },
     arrivalTime:{
         type:Date,
         required:true,
     },
-    startingTime:{
-        type:Date,
+    price: {
+        type: Number,
+        required:true
+    },
+    availableSeats:{
+        type:Number,
         required:true,
     },
-    flyFrom:{
-        type:String,
-        required:true,
-    },
-    flyTo:{
-        type:String,
-        required:true,
-    },
-    seats:[{
-        openSeats:{
-            type:Number,
-            required:true,
-        },
-    }]
+    status: {
+        type: String,
+        enum: ["scheduled", "delayed", "cancelled"],
+        default: "scheduled"
+    }
 },
 {timestamps:true},
-)
+);
 module.exports=mongoose.model('Flight',flightSchema);
