@@ -20,6 +20,10 @@ exports.createFlight = async (req, res) => {
             {arrivalTime: req.body["arrivalTime"]},
             {price: req.body["price"]},
             {availableSeats: req.body["availableSeats"]},
+            {"airport.name": req.body["airport.name"]},
+            {"airport.code": req.body["airport.code"]},
+            {"airport.city": req.body["airport.city"]},
+            {"airport.country": req.body["airport.country"]},
             {status: req.body["status"]}
         ]});
         if(!flight){
@@ -36,6 +40,10 @@ exports.createFlight = async (req, res) => {
             arrivalTime: req.body["arrivalTime"],
             price: req.body["price"],
             availableSeats: req.body["availableSeats"],
+            "airport.name": req.body["airport.name"],
+            "airport.code": req.body["airport.code"],
+            "airport.city": req.body["airport.city"],
+            "airport.country": req.body["airport.country"],
             status: req.body["status"]
         });
         return res.status(201).json({ data: newFlight,  message: "Flight created successfully" });
@@ -93,6 +101,10 @@ exports.updateFlightById = async (req, res) => {
             {arrivalTime: req.body["arrivalTime"]},
             {price: req.body["price"]},
             {availableSeats: req.body["availableSeats"]},
+            {"airport.name": req.body["airport.name"]},
+            {"airport.code": req.body["airport.code"]},
+            {"airport.city": req.body["airport.city"]},
+            {"airport.country": req.body["airport.country"]},
             {status: req.body["status"]}
         );
         return res.status(200).json({ data: flight });
