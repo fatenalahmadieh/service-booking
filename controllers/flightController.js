@@ -82,7 +82,7 @@ exports.updateFlightById = async (req, res) => {
         if(!flight){
             return res
             .status(401)
-            .json({message: "flight is not found"});
+            .json({message : "flight is not found"});
         }
         const flight = await flight.findOneAndUpdate(
             {flightNumber: req.body["flightNumber"]},
