@@ -1,32 +1,80 @@
 const User = require("../models/userSchema");
-const Flight=require("../models/flightSchema");
-const Booking= require("../models/bookingSchema");
-exports.booking=async(req,res)=>{
-    try{
-        const {userID, flightID,seatNumber, totalPrice}=req.body;
-        const flight=await Flight.findById(flightID);
-        if(!flight){
-            return res.status(404).json({message:"Flight not found"});
-        }
-        if(flight.capacity<=0){
-            return res.status(400).json({message:"Flight is full"});
-        }
-        flight.capacity-=1;
-        await flight.save();
+const Flight = require("../models/flightSchema");
+const Booking = require("../models/bookingSchema");
+
+exports.createUser = async (req, res) => {
+    try {
         
-        const bookedFlight=new Booking({
-            seatNumber,
-            bookingStatus:'confirmed',
-            totalPrice,
-            passenger:userID,
-            flight:flightID,
+        return res.status(201).json({
+            message: "User created successfully",
+            data: newUser
         });
-        await bookedFlight.save();
-        res.status(201).json({
-            message:"New Booking Added Successfully"
-        });
-    }catch(err){
+    } catch (err) {
         console.log(err);
-        res.status(500).json({message:err.message});
+        return res.status(500).json({ message: err.message });
     }
-}
+};
+
+exports.updateUser = async (req, res) => {
+    try {
+
+        return res.status(200).json({
+            message: "User updated successfully",
+            data: updatedUser
+        });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ message: err.message });
+    }
+};
+
+exports.deleteUser = async (req, res) => {
+    try {
+
+        return res.status(200).json({
+            message: "User deleted successfully"
+        });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ message: err.message });
+    }
+};
+
+// exports.booking = async (req, res) => {
+//     try {
+//         const {userID, flightID, seatNumber, totalPrice} = req.body;
+//         const flight = await Flight.findById(flightID);
+//         if(!flight){
+//             return res.status(404).json({message:"Flight not found"});
+//         }
+//         if(flight.availableSeats <= 0){
+//             return res.status(400).json({message:"Flight is full"});
+//         }
+//         flight.availableSeats -= 1;
+//         await flight.save();
+        
+//         const bookedFlight = new Booking({
+//             seatNumber,
+//             bookingStatus: 'confirmed',
+//             totalPrice,
+//             passenger: userID,
+//             flight: flightID,
+//         });
+//         await bookedFlight.save();
+//         res.status(201).json({
+//             message: "New Booking Added Successfully"
+//         });
+//     }catch(err){
+//         console.log(err);
+//         res.status(500).json({message:err.message});
+//     }
+// }
+exports.getUserById = async (req, res) => {
+    try {
+
+        return res.status(200).json({ data: "user" });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ message: err.message });
+    }
+};

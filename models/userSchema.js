@@ -1,5 +1,5 @@
-const mongoose=require('mongoose');
-const Schema=mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
     firstName : {
@@ -18,7 +18,8 @@ const userSchema = new Schema({
         type: Date
     },
     userType:{
-        enum:['Pilot','"Passenger',''],
+        type: String,
+        enum:['Pilot','Passenger',''],
         required:true,
     },
     pilot:{
@@ -33,7 +34,14 @@ const userSchema = new Schema({
             }
     },
     passenger:{
-
+        passportNumber: {
+                type: String,
+                required: true
+            },
+            passportExpiryDate: {
+                type: Date,
+                required: true
+            },
     },
     host:{
         subRole: {
@@ -85,4 +93,5 @@ const userSchema = new Schema({
 },
 { timestamps: true }
 );
-module.exports = mongoose.model("Passenger", passengerSchema);
+
+module.exports = mongoose.model("User", userSchema);
