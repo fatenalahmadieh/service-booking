@@ -87,15 +87,53 @@ exports.getUserBookings = async (req, res) => {
 // Cancel booking by Id 
 exports.cancelBooking = async (req, res) => {
     try{
-            const booking = await Booking.findById(req.params.bookingId);
+            const booking = await Booking.findById(req.params);
+            const flight = await Flight.findById(req.body.findById);
             if(!booking){
                 return res
                 .status(404)
                 .json({message: "booking is not found"});
             };
+            if(booking.bookingStatus === 'cancelled'){
+                return res
+                .status(404)
+                .json({message: "booking is allready cancelled"});
+            }
+            await Flight.findByIdAndUpdate(booking.flightId, {
+                availableSeats: flight.availableSeats + 1
+            });
             booking.bookingStatus ="cancelled";
+            if(booking.payment.paymentStatus === 'paid'){
+                booking.payment.paymentStatus = 'failed';
+            }
             await booking.save();
             return res.status(200).json({ message: "Booking cancelled successfully", data: booking });
+        }catch (err){
+            console.log(err);
+            res.status(500).json({message:err.message});
+        }
+};
+
+// PUT /api/bookings/:bookingId/confirm
+// confirm booking by Id 
+exports.confirmBooking = async (req, res) => {
+    try{
+
+            const booking = await Booking.findById(req.params);
+            const flight = await Flight.findById(req.body.findById);
+            if(!booking){
+                return res
+                .status(404)
+                .json({message: "booking is not found"});
+            };
+            booking.bookingStatus ="confirmed";
+            booking.payment.paymentStatus = "paid";
+            booking.payment.paidAt = new Date();
+            await booking.save();
+            await Flight.findByIdAndUpdate(booking.flightId, {
+                availableSeats: flight.availableSeats - 1
+            });
+            return res.status(200).json({ message: "Booking confirmed successfully", data: booking });
         }catch (err){
             console.log(err);
             res.status(500).json({message:err.message});
