@@ -10,12 +10,12 @@ const flightSchema=new Schema({
         required:true,
     },
     departureAirport:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Airport"
+        type:String,
+        required:true,
     },
     arrivalAirport: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Airport"
+        type:String,
+        required:true,
     },
     departureTime: {
         type:Date,
