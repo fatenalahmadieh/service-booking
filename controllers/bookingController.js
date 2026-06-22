@@ -16,7 +16,7 @@ exports.createBooking = async (req, res) => {
             .status(409)
             .json({message: "booking is already found"});
     };
-    const newBooking = await Booking.create({
+    const newBooking = await bookingSchema.create({
             userId: req.body.userId,
             flightId: req.body.flightId,
             seatNumber: req.body.seatNumber,
