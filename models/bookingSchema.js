@@ -11,7 +11,8 @@ const bookingSchema = new mongoose.Schema(
             ref: "Flight"
         },
         seatNumber: {
-            type: String
+            type: String,
+            required: true
         },
         totalPrice: {
             type: Number,
@@ -38,7 +39,10 @@ const bookingSchema = new mongoose.Schema(
             },
             transactionId: {
                 type: String
-            }
+            },
+            paidAt: {
+                type: Date,
+            },
         }
     },
     { timestamps: true }
