@@ -27,10 +27,17 @@ exports.updateUser = async (req, res) => {
         return res.status(500).json({ message: err.message });
     }
 };
-
+// DELETE /api/User/:id
+// delete user
 exports.deleteUser = async (req, res) => {
     try {
-
+        const userCheck = await User.findById(req.params["id"]);
+            if(!userCheck){
+                return res
+                .status(401)
+                .json({message: "user is not found"});
+            };
+        await User.findByIdAndDelete(req.params["id"]);
         return res.status(200).json({
             message: "User deleted successfully"
         });
@@ -69,9 +76,17 @@ exports.deleteUser = async (req, res) => {
 //         res.status(500).json({message:err.message});
 //     }
 // }
+
+// GET    /api/User/:id
+// get user by id
 exports.getUserById = async (req, res) => {
     try {
-
+        const userCheck = await User.findById(req.params["id"]);
+        if(!userCheck){
+            return res
+            .status(401)
+            .json({message: "user is not found"});
+        };
         return res.status(200).json({ data: "user" });
     } catch (err) {
         console.log(err);
