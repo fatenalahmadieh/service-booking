@@ -7,7 +7,7 @@ const bookingRouter = require('./routers/bookingRouter');
 const authRouter = require('./routers/authRouter');
 app.use(express.json());
 
-app.use('api', authRouter);
+app.use('/api', authRouter);
 app.use('/api', userRouter);
 app.use('/api', flightRouter);
 app.use('/api', bookingRouter);
