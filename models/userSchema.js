@@ -19,7 +19,7 @@ const userSchema = new Schema({
     },
     userType:{
         type: String,
-        enum:['Pilot','Passenger',''],
+        enum:['Pilot','Passenger','host','admin'],
         required:true,
     },
     pilot:{
