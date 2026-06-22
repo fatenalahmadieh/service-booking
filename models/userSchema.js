@@ -38,7 +38,8 @@ const userSchema = new Schema({
         required:true,
         trim:true,
         maxLength:12,
-    }
+    },
+    passwordChangedAt:Date
     ,
     userType:{
         type: String,
