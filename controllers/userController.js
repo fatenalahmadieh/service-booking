@@ -5,58 +5,6 @@ const userSchema = require("../models/userSchema");
 
 // create /api/User/:id
 // craete user
-exports.signup = async (req, res) => {
-    try {
-        const userCheck = await User.findOne({$or: [
-            {firstName: req.body["firstName"]},
-            {lastName: req.body["lastName"]},
-            {email: req.body["email"]},
-            {userType: req.body["userType"]},
-    ]});
-    if(userCheck){
-            return res
-            .status(409)
-            .json({message: "User is already exists"});
-    };
-    if(req.body["password"] !== req.body["passwordConfirm"]){
-            return res
-            .status(400)
-            .json({message: "Please enter matching password and password comfirm",});
-    }
-    const newUser = await userSchema.create({
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            email: req.body.email,
-            password: req.body.password,
-            nationality: req.body.nationality,
-            dateOfBirth: req.body.dateOfBirth,
-            userType: req.body.userType,
-            pilot: req.body.userType === 'pilot' ? req.body.pilot : undefined,
-            passenger: req.body.userType === 'passenger' ? req.body.pilot : undefined,
-            host: req.body.userType === 'host' ? req.body.pilot : undefined,
-            admin: req.body.userType === 'admin' ? req.body.pilot : undefined,
-    });
-    } catch (err) {
-        console.log(err);
-        return res.status(500).json({ message: err.message });
-    }
-};
-// login /api/User/:id
-// login user
-exports.login = async(req,res) =>{
-    try{
-        const {email,password} = req.body;
-        const userCheck = await User.findOne({email});
-
-        if(!userCheck || !(await userCheck.checkPassword(password, userCheck.password))){
-            return res.status(401).json({ message: "Invalid Credentialss"});
-        }
-        return res.status(200).json({ message: "logged in successfully" });
-    }catch(err){
-        console.log(err);
-        res.status(500).json({ message: err.message });
-    }
-};
 
 // Update /api/User/:id
 // update user
