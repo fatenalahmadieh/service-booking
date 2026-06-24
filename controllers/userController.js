@@ -32,9 +32,9 @@ exports.signup = async (req, res) => {
             dateOfBirth: req.body.dateOfBirth,
             userType: req.body.userType,
             pilot: req.body.userType === 'pilot' ? req.body.pilot : undefined,
-            passenger: req.body.userType === 'passenger' ? req.body.passenger : undefined,
-            host: req.body.userType === 'host' ? req.body.host : undefined,
-            admin: req.body.userType === 'admin' ? req.body.admin : undefined,
+            passenger: req.body.userType === 'passenger' ? req.body.pilot : undefined,
+            host: req.body.userType === 'host' ? req.body.pilot : undefined,
+            admin: req.body.userType === 'admin' ? req.body.pilot : undefined,
     });
     } catch (err) {
         console.log(err);
