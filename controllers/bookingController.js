@@ -6,17 +6,16 @@ const User = require('../models/userSchema');
 // create booking
 exports.createBooking = async (req, res) => {
     try{
-        const booking = await Booking.findOne({$or: [
-            {flightId: req.body["flightId"]},
-            {seatNumber: req.body["seatNumber"]},
-            {bookingStatus: req.body["bookingStatus"]},
-    ]});
+        const booking = await Booking.findOne(
+            {flightId: req.body["flightId"],
+            seatNumber: req.body["seatNumber"]}
+    );
     if(booking){
             return res
             .status(409)
             .json({message: "booking is already found"});
     };
-    const newBooking = await bookingSchema.create({
+    const newBooking = await Booking.create({
             userId: req.body.userId,
             flightId: req.body.flightId,
             seatNumber: req.body.seatNumber,
@@ -53,7 +52,7 @@ exports.getAllBooking = async (req, res) => {
 
 exports.getBookingById = async (req, res) => {
     try{
-        const booking = await Booking.findById(req.params["bookingId"]);
+        const booking = await Booking.findById(req.params.id);
         if(!booking){
             return res
             .status(404)
@@ -71,7 +70,7 @@ exports.getBookingById = async (req, res) => {
 exports.getUserBookings = async (req, res) => {
     try{
         const bookings = await Booking.find({ userId: req.params.userId });
-        if(!booking){
+        if(!bookings){
             return res
             .status(404)
             .json({message: "booking is not found"});
@@ -87,8 +86,8 @@ exports.getUserBookings = async (req, res) => {
 // Cancel booking by Id 
 exports.cancelBooking = async (req, res) => {
     try{
-            const booking = await Booking.findById(req.params);
-            const flight = await Flight.findById(req.body.findById);
+            const booking = await Booking.findById(req.params.id);
+            const flight = await Flight.findById(booking.flightId);
             if(!booking){
                 return res
                 .status(404)
@@ -119,8 +118,8 @@ exports.cancelBooking = async (req, res) => {
 exports.confirmBooking = async (req, res) => {
     try{
 
-            const booking = await Booking.findById(req.params);
-            const flight = await Flight.findById(req.body.findById);
+            const booking = await Booking.findById(req.params["bookingId"]);
+            const flight = await Flight.findById(req.body.flightId);
             if(!booking){
                 return res
                 .status(404)

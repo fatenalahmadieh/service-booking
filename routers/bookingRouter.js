@@ -1,12 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const bookingController = require("../controllers/bookingController");
+const authController = require("../controllers/authController");
 
-
-router.post("/bookings", bookingController.createBooking);      
-router.get("/bookings", bookingController.getAllBookings);
-router.get("/bookings/:id", bookingController.getBookingById);
-router.get("/users/:id/bookings", bookingController.getUserBookings);
-router.put("/bookings/:id/cancel", bookingController.cancelBooking);
+router.post("/bookings",authController.protect, 
+    authController.restrictTo('Passenger','Admin'), bookingController.createBooking);      
+router.get("/bookings", authController.protect, 
+    authController.restrictTo('Admin'),bookingController.getAllBooking);  
+router.get("/bookings/:id", authController.protect, 
+    authController.restrictTo('Admin'),bookingController.getBookingById);
+router.get("/users/:id/bookings",authController.protect, 
+    authController.restrictTo('Passenger'), bookingController.getUserBookings);
+router.put("/bookings/:id/cancel", authController.protect, 
+    authController.restrictTo('Passenger'),bookingController.cancelBooking);
 
 module.exports = router;

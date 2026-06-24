@@ -11,7 +11,7 @@ app.use('/api', authRouter);
 app.use('/api', userRouter);
 app.use('/api', flightRouter);
 app.use('/api', bookingRouter);
-
+app.get('/test', (req, res) => res.send('Server is alive!'));
 connectDB();
 
 app.listen(3000, () => {

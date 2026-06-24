@@ -32,9 +32,9 @@ exports.signup = async (req, res) => {
             dateOfBirth: req.body.dateOfBirth,
             userType: req.body.userType,
             pilot: req.body.userType === 'pilot' ? req.body.pilot : undefined,
-            passenger: req.body.userType === 'passenger' ? req.body.pilot : undefined,
-            host: req.body.userType === 'host' ? req.body.pilot : undefined,
-            admin: req.body.userType === 'admin' ? req.body.pilot : undefined,
+            passenger: req.body.userType === 'passenger' ? req.body.passenger : undefined,
+            host: req.body.userType === 'host' ? req.body.host : undefined,
+            admin: req.body.userType === 'admin' ? req.body.admin : undefined,
     });
     } catch (err) {
         console.log(err);
@@ -62,19 +62,11 @@ exports.login = async(req,res) =>{
 // update user
 exports.updateUser = async (req, res) => {
     try {
-        const userCheck = await User.findOne({$or: [
-            {firstName: req.body["firstName"]},
-            {lastName: req.body["lastName"]},
-            {email: req.body["email"]},
-            {password: req.body["password"]},
-            {nationality: req.body["nationality"]},
-            {dateOfBirth: req.body["dateOfBirth"]},
-            {userType: req.body["userType"]},
-        ]});
-        if(user){
+        const userCheck = await User.findById(req.params.id);
+        if(!userCheck){
             return res
             .status(409)
-            .json({message: "User is already found"});
+            .json({message: "User is not found"});
         };
         const updatedUser = await User.findByIdAndUpdate(
             req.params["id"],
@@ -162,10 +154,10 @@ exports.getUserById = async (req, res) => {
         const userCheck = await User.findById(req.params["id"]);
         if(!userCheck){
             return res
-            .status(401)
+            .status(404)
             .json({message: "user is not found"});
         };
-        return res.status(200).json({ data: "user" });
+        return res.status(200).json({ data: userCheck });
     } catch (err) {
         console.log(err);
         return res.status(500).json({ message: err.message });

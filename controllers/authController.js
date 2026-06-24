@@ -131,3 +131,26 @@ exports.protect = async(req,res,next)=>{
         res.status(500).json({message:"Something went wrong!!"});
     }
 }
+// controllers/authController.js
+
+// ... your existing code ...
+
+// Middleware to restrict access based on user classification
+exports.restrictTo = (...allowedRoles) => {
+    return (req, res, next) => {
+        // 1. req.user was placed here by the previous 'protect' middleware
+        if (!req.user) {
+            return res.status(500).json({ message: "User context missing. Ensure protect middleware is called first." });
+        }
+
+        // 2. Check if the user's role is included in the allowed roles
+        if (!allowedRoles.includes(req.user.userType)) {
+            return res.status(403).json({ 
+                message: "Access Denied: You do not have permission to perform this action." 
+            });
+        }
+
+        // 3. If authorized, let them through to the controller!
+        next();
+    };
+};

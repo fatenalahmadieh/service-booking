@@ -1,88 +1,366 @@
-const mongoose=require('mongoose');
-const Schema=mongoose.Schema;
+2026-06-24 13:49:39.363 [info] [main] Log level: Info
+2026-06-24 13:49:39.363 [info] [main] Validating found git in: "git"
+2026-06-24 13:49:39.363 [info] [main] Using git "2.43.0" from "git"
+2026-06-24 13:49:39.363 [info] [Model][doInitialScan] Initial repository scan started
+2026-06-24 13:49:39.363 [info] > git rev-parse --show-toplevel [7ms]
+2026-06-24 13:49:39.368 [info] > git rev-parse --git-dir --git-common-dir --show-superproject-working-tree [6ms]
+2026-06-24 13:49:39.546 [info] [Model][openRepository] Opened repository (path): /home/alichible/Desktop/projects/QuickProject
+2026-06-24 13:49:39.546 [info] [Model][openRepository] Opened repository (real path): /home/alichible/Desktop/projects/QuickProject
+2026-06-24 13:49:39.546 [info] [Model][openRepository] Opened repository (kind): repository
+2026-06-24 13:49:39.603 [info] > git rev-parse --show-toplevel [28ms]
+2026-06-24 13:49:39.603 [info] > git config --get commit.template [32ms]
+2026-06-24 13:49:39.603 [info] > git config --get --local core.virtualfilesystem [49ms]
+2026-06-24 13:49:39.603 [warning] [Git][config] git config failed: Failed to execute git
+2026-06-24 13:49:39.618 [info] > git rev-parse --show-toplevel [8ms]
+2026-06-24 13:49:39.627 [info] > git rev-parse --show-toplevel [2ms]
+2026-06-24 13:49:39.627 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [10ms]
+2026-06-24 13:49:39.738 [info] > git status -z -uall [60ms]
+2026-06-24 13:49:39.738 [info] > git rev-parse --show-toplevel [105ms]
+2026-06-24 13:49:39.739 [info] [Model][doInitialScan] Initial repository scan completed - repositories (1), closed repositories (0), parent repositories (0), unsafe repositories (0)
+2026-06-24 13:49:40.110 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [427ms]
+2026-06-24 13:49:40.218 [info] > git check-ignore -v -z --stdin [47ms]
+2026-06-24 13:49:40.219 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [56ms]
+2026-06-24 13:49:40.295 [info] > git config --get --local branch.main.vscode-merge-base [70ms]
+2026-06-24 13:49:40.295 [warning] [Git][config] git config failed: Failed to execute git
+2026-06-24 13:49:40.301 [info] > git config --get commit.template [85ms]
+2026-06-24 13:49:40.325 [info] > git check-ignore -v -z --stdin [12ms]
+2026-06-24 13:49:40.326 [info] > git reflog main --grep-reflog=branch: Created from *. [25ms]
+2026-06-24 13:49:40.342 [info] > git symbolic-ref --short refs/remotes/origin/HEAD [10ms]
+2026-06-24 13:49:40.342 [info] fatal: ref refs/remotes/origin/HEAD is not a symbolic ref
+2026-06-24 13:49:40.342 [warning] [Repository][getDefaultBranch] Failed to get default branch details: Failed to execute git.
+2026-06-24 13:49:40.349 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [25ms]
+2026-06-24 13:49:40.395 [info] > git show --textconv :controllers/bookingController.js [25ms]
+2026-06-24 13:49:40.395 [info] > git ls-files --stage -- controllers/bookingController.js [18ms]
+2026-06-24 13:49:40.404 [info] > git merge-base refs/heads/main refs/remotes/origin/main [55ms]
+2026-06-24 13:49:40.429 [info] > git diff --raw --numstat --diff-filter=ADMR -z --find-renames=50% 40d220027ae43ce1563fa22b952998ece5d88957...refs/remotes/origin/main -- [18ms]
+2026-06-24 13:49:40.429 [info] > git cat-file -s 7d76298f7918d6cfb027bfc14a86735c34eaca27 [26ms]
+2026-06-24 13:49:40.479 [info] > git status -z -uall [11ms]
+2026-06-24 13:49:40.489 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [13ms]
+2026-06-24 13:49:40.491 [info] > git check-ignore -v -z --stdin [3ms]
+2026-06-24 13:49:40.515 [info] > git blame --root --incremental 40d220027ae43ce1563fa22b952998ece5d88957 -- controllers/bookingController.js [13ms]
+2026-06-24 13:49:41.443 [info] > git config --get commit.template [21ms]
+2026-06-24 13:49:41.471 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [10ms]
+2026-06-24 13:49:41.512 [info] > git status -z -uall [9ms]
+2026-06-24 13:49:41.514 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [5ms]
+2026-06-24 13:49:55.393 [info] > git show -s --decorate=full --shortstat --format=%H%n%aN%n%aE%n%at%n%ct%n%P%n%D%n%B -z 4b6107a12b13b5dab7e7ef1c175672fdf34c6b5c -- [2ms]
+2026-06-24 14:29:22.838 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 14:29:22.863 [info] > git show --textconv :controllers/userController.js [10ms]
+2026-06-24 14:29:22.864 [info] > git ls-files --stage -- controllers/userController.js [2ms]
+2026-06-24 14:29:22.882 [info] > git cat-file -s 0b44b27776eff0e9ef4306084d64af54ebb55d24 [7ms]
+2026-06-24 14:29:22.932 [info] > git blame --root --incremental 40d220027ae43ce1563fa22b952998ece5d88957 -- controllers/userController.js [19ms]
+2026-06-24 14:30:13.698 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 14:30:15.799 [info] > git check-ignore -v -z --stdin [3ms]
+2026-06-24 14:30:15.822 [info] > git show --textconv :controllers/bookingController.js [8ms]
+2026-06-24 14:30:15.823 [info] > git ls-files --stage -- controllers/bookingController.js [1ms]
+2026-06-24 14:30:15.832 [info] > git cat-file -s 7d76298f7918d6cfb027bfc14a86735c34eaca27 [1ms]
+2026-06-24 14:30:33.785 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 14:30:33.814 [info] > git show --textconv :controllers/userController.js [13ms]
+2026-06-24 14:30:33.814 [info] > git ls-files --stage -- controllers/userController.js [1ms]
+2026-06-24 14:30:33.823 [info] > git cat-file -s 0b44b27776eff0e9ef4306084d64af54ebb55d24 [1ms]
+2026-06-24 14:30:35.114 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 14:30:42.997 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 14:30:48.910 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 14:30:49.352 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 14:31:05.345 [info] > git config --get commit.template [8ms]
+2026-06-24 14:31:05.345 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [1ms]
+2026-06-24 14:31:05.363 [info] > git status -z -uall [9ms]
+2026-06-24 14:31:05.364 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [2ms]
+2026-06-24 14:31:54.331 [info] > git check-ignore -v -z --stdin [3ms]
+2026-06-24 14:31:54.355 [info] > git show --textconv :controllers/bookingController.js [10ms]
+2026-06-24 14:31:54.356 [info] > git ls-files --stage -- controllers/bookingController.js [2ms]
+2026-06-24 14:31:54.370 [info] > git cat-file -s 7d76298f7918d6cfb027bfc14a86735c34eaca27 [6ms]
+2026-06-24 14:31:57.353 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 14:31:57.375 [info] > git show --textconv :controllers/userController.js [11ms]
+2026-06-24 14:31:57.376 [info] > git ls-files --stage -- controllers/userController.js [1ms]
+2026-06-24 14:31:57.385 [info] > git cat-file -s 0b44b27776eff0e9ef4306084d64af54ebb55d24 [1ms]
+2026-06-24 14:31:59.894 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 14:32:09.598 [info] > git config --get commit.template [9ms]
+2026-06-24 14:32:09.598 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [1ms]
+2026-06-24 14:32:09.617 [info] > git status -z -uall [9ms]
+2026-06-24 14:32:09.618 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [2ms]
+2026-06-24 14:33:54.003 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 14:33:55.697 [info] > git config --get commit.template [10ms]
+2026-06-24 14:33:55.698 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2026-06-24 14:33:55.715 [info] > git status -z -uall [8ms]
+2026-06-24 14:33:55.716 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [1ms]
+2026-06-24 14:37:20.316 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 14:37:20.338 [info] > git show --textconv :controllers/flightController.js [11ms]
+2026-06-24 14:37:20.339 [info] > git ls-files --stage -- controllers/flightController.js [2ms]
+2026-06-24 14:37:20.351 [info] > git cat-file -s 9a60a06f665eb129805551182d641ec2505a4102 [2ms]
+2026-06-24 14:37:30.406 [info] > git blame --root --incremental 40d220027ae43ce1563fa22b952998ece5d88957 -- controllers/flightController.js [8ms]
+2026-06-24 14:41:11.253 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 14:41:11.274 [info] > git show --textconv :controllers/userController.js [10ms]
+2026-06-24 14:41:11.274 [info] > git ls-files --stage -- controllers/userController.js [1ms]
+2026-06-24 14:41:11.282 [info] > git cat-file -s 0b44b27776eff0e9ef4306084d64af54ebb55d24 [1ms]
+2026-06-24 14:41:56.777 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 14:41:56.796 [info] > git show --textconv :controllers/bookingController.js [8ms]
+2026-06-24 14:41:56.796 [info] > git ls-files --stage -- controllers/bookingController.js [1ms]
+2026-06-24 14:41:56.803 [info] > git cat-file -s 7d76298f7918d6cfb027bfc14a86735c34eaca27 [0ms]
+2026-06-24 14:50:28.338 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 14:50:28.356 [info] > git show --textconv :models/userSchema.js [8ms]
+2026-06-24 14:50:28.356 [info] > git ls-files --stage -- models/userSchema.js [1ms]
+2026-06-24 14:50:28.364 [info] > git cat-file -s c30c0982d75d74345e1e0595f4ef31cde80950cf [1ms]
+2026-06-24 14:50:28.389 [info] > git blame --root --incremental 40d220027ae43ce1563fa22b952998ece5d88957 -- models/userSchema.js [7ms]
+2026-06-24 14:50:34.250 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 14:50:37.519 [info] > git config --get commit.template [9ms]
+2026-06-24 14:50:37.520 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2026-06-24 14:50:37.540 [info] > git status -z -uall [9ms]
+2026-06-24 14:50:37.541 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [2ms]
+2026-06-24 14:55:51.505 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 14:55:51.523 [info] > git show --textconv :controllers/userController.js [8ms]
+2026-06-24 14:55:51.524 [info] > git ls-files --stage -- controllers/userController.js [1ms]
+2026-06-24 14:55:51.532 [info] > git cat-file -s 0b44b27776eff0e9ef4306084d64af54ebb55d24 [1ms]
+2026-06-24 14:56:06.199 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 14:56:06.229 [info] > git show --textconv :routers/userRouter.js [12ms]
+2026-06-24 14:56:06.230 [info] > git ls-files --stage -- routers/userRouter.js [1ms]
+2026-06-24 14:56:06.238 [info] > git cat-file -s 368f62df28b82e2b5514b4ba3e7fb33b24dfe627 [1ms]
+2026-06-24 14:56:14.194 [info] > git blame --root --incremental 40d220027ae43ce1563fa22b952998ece5d88957 -- routers/userRouter.js [9ms]
+2026-06-24 14:56:19.472 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 14:56:19.493 [info] > git show --textconv :routers/authRouter.js [10ms]
+2026-06-24 14:56:19.494 [info] > git ls-files --stage -- routers/authRouter.js [2ms]
+2026-06-24 14:56:19.504 [info] > git cat-file -s b3b5debfabe92467aa909556b977c7f6cb2913fd [2ms]
+2026-06-24 14:56:26.734 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 14:56:26.751 [info] > git show --textconv :controllers/authController.js [8ms]
+2026-06-24 14:56:26.752 [info] > git ls-files --stage -- controllers/authController.js [1ms]
+2026-06-24 14:56:26.760 [info] > git cat-file -s 5f53b14c5080e5200c854eaf301aa706cd475d91 [1ms]
+2026-06-24 14:56:26.777 [info] > git blame --root --incremental 40d220027ae43ce1563fa22b952998ece5d88957 -- controllers/authController.js [4ms]
+2026-06-24 14:56:49.552 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 14:56:49.578 [info] > git show --textconv :routers/authRouter.js [13ms]
+2026-06-24 14:56:49.579 [info] > git ls-files --stage -- routers/authRouter.js [5ms]
+2026-06-24 14:56:49.589 [info] > git cat-file -s b3b5debfabe92467aa909556b977c7f6cb2913fd [1ms]
+2026-06-24 15:09:46.263 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 15:09:46.280 [info] > git show --textconv :models/userSchema.js [9ms]
+2026-06-24 15:09:46.281 [info] > git ls-files --stage -- models/userSchema.js [1ms]
+2026-06-24 15:09:46.290 [info] > git cat-file -s c30c0982d75d74345e1e0595f4ef31cde80950cf [1ms]
+2026-06-24 15:11:59.411 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 15:11:59.429 [info] > git show --textconv :controllers/userController.js [8ms]
+2026-06-24 15:11:59.430 [info] > git ls-files --stage -- controllers/userController.js [2ms]
+2026-06-24 15:11:59.440 [info] > git cat-file -s 0b44b27776eff0e9ef4306084d64af54ebb55d24 [1ms]
+2026-06-24 15:12:05.802 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 15:12:07.935 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 15:12:10.690 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 15:12:12.952 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 15:12:17.042 [info] > git config --get commit.template [13ms]
+2026-06-24 15:12:17.042 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2026-06-24 15:12:17.066 [info] > git status -z -uall [13ms]
+2026-06-24 15:12:17.067 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [2ms]
+2026-06-24 15:37:12.307 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 15:37:14.679 [info] > git config --get commit.template [11ms]
+2026-06-24 15:37:14.680 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2026-06-24 15:37:14.699 [info] > git status -z -uall [9ms]
+2026-06-24 15:37:14.700 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [1ms]
+2026-06-24 15:42:04.187 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 15:42:04.205 [info] > git show --textconv :controllers/authController.js [7ms]
+2026-06-24 15:42:04.206 [info] > git ls-files --stage -- controllers/authController.js [1ms]
+2026-06-24 15:42:04.214 [info] > git cat-file -s 5f53b14c5080e5200c854eaf301aa706cd475d91 [1ms]
+2026-06-24 15:42:06.290 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 15:42:59.991 [info] > git config --get commit.template [2ms]
+2026-06-24 15:43:00.001 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [1ms]
+2026-06-24 15:43:00.017 [info] > git status -z -uall [8ms]
+2026-06-24 15:43:00.018 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [1ms]
+2026-06-24 15:43:00.341 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 15:43:09.186 [info] > git check-ignore -v -z --stdin [0ms]
+2026-06-24 15:43:09.202 [info] > git show --textconv :routers/userRouter.js [7ms]
+2026-06-24 15:43:09.203 [info] > git ls-files --stage -- routers/userRouter.js [1ms]
+2026-06-24 15:43:09.209 [info] > git cat-file -s 368f62df28b82e2b5514b4ba3e7fb33b24dfe627 [0ms]
+2026-06-24 15:43:17.559 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 15:43:17.587 [info] > git show --textconv :routers/flightRouter.js [13ms]
+2026-06-24 15:43:17.588 [info] > git ls-files --stage -- routers/flightRouter.js [2ms]
+2026-06-24 15:43:17.604 [info] > git cat-file -s 1f5580363de9663bc95890bdd7789362b955c4f0 [1ms]
+2026-06-24 15:43:21.854 [info] > git blame --root --incremental 40d220027ae43ce1563fa22b952998ece5d88957 -- routers/flightRouter.js [6ms]
+2026-06-24 15:43:23.597 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 15:43:25.855 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 15:43:32.699 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 15:43:37.776 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 15:43:37.793 [info] > git show --textconv :models/userSchema.js [10ms]
+2026-06-24 15:43:37.794 [info] > git ls-files --stage -- models/userSchema.js [1ms]
+2026-06-24 15:43:37.803 [info] > git cat-file -s c30c0982d75d74345e1e0595f4ef31cde80950cf [1ms]
+2026-06-24 15:43:54.039 [info] > git check-ignore -v -z --stdin [3ms]
+2026-06-24 15:43:54.245 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 15:43:57.206 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 15:43:59.909 [info] > git config --get commit.template [11ms]
+2026-06-24 15:43:59.909 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [1ms]
+2026-06-24 15:43:59.933 [info] > git status -z -uall [13ms]
+2026-06-24 15:43:59.935 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [2ms]
+2026-06-24 15:44:03.343 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 15:44:03.359 [info] > git show --textconv :routers/flightRouter.js [7ms]
+2026-06-24 15:44:03.360 [info] > git ls-files --stage -- routers/flightRouter.js [1ms]
+2026-06-24 15:44:03.370 [info] > git cat-file -s 1f5580363de9663bc95890bdd7789362b955c4f0 [2ms]
+2026-06-24 15:44:09.138 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 15:44:11.688 [info] > git config --get commit.template [12ms]
+2026-06-24 15:44:11.689 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2026-06-24 15:44:11.707 [info] > git status -z -uall [8ms]
+2026-06-24 15:44:11.708 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [1ms]
+2026-06-24 15:44:12.030 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 15:44:56.286 [info] > git check-ignore -v -z --stdin [3ms]
+2026-06-24 15:44:56.322 [info] > git show --textconv :routers/userRouter.js [18ms]
+2026-06-24 15:44:56.334 [info] > git ls-files --stage -- routers/userRouter.js [13ms]
+2026-06-24 15:44:56.343 [info] > git cat-file -s 368f62df28b82e2b5514b4ba3e7fb33b24dfe627 [1ms]
+2026-06-24 15:45:04.532 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 15:45:04.559 [info] > git show --textconv :routers/flightRouter.js [12ms]
+2026-06-24 15:45:04.560 [info] > git ls-files --stage -- routers/flightRouter.js [1ms]
+2026-06-24 15:45:04.571 [info] > git cat-file -s 1f5580363de9663bc95890bdd7789362b955c4f0 [2ms]
+2026-06-24 15:45:05.735 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 15:45:07.036 [info] > git config --get commit.template [13ms]
+2026-06-24 15:45:07.037 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2026-06-24 15:45:07.061 [info] > git status -z -uall [12ms]
+2026-06-24 15:45:07.063 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [3ms]
+2026-06-24 15:45:28.846 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 15:45:29.302 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 15:45:31.565 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 15:45:31.911 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 15:45:40.555 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 15:45:43.236 [info] > git config --get commit.template [9ms]
+2026-06-24 15:45:43.237 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2026-06-24 15:45:43.250 [info] > git status -z -uall [6ms]
+2026-06-24 15:45:43.251 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [1ms]
+2026-06-24 16:11:34.541 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:11:34.559 [info] > git show --textconv :routers/bookingRouter.js [8ms]
+2026-06-24 16:11:34.560 [info] > git ls-files --stage -- routers/bookingRouter.js [1ms]
+2026-06-24 16:11:34.569 [info] > git cat-file -s 27ad156ba1b2ce22b061456e1dbf7b36931c3e2d [1ms]
+2026-06-24 16:11:36.900 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:11:36.929 [info] > git show --textconv :routers/userRouter.js [16ms]
+2026-06-24 16:11:36.930 [info] > git ls-files --stage -- routers/userRouter.js [2ms]
+2026-06-24 16:11:36.946 [info] > git cat-file -s 368f62df28b82e2b5514b4ba3e7fb33b24dfe627 [4ms]
+2026-06-24 16:11:45.778 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 16:11:45.805 [info] > git show --textconv :routers/bookingRouter.js [12ms]
+2026-06-24 16:11:45.806 [info] > git ls-files --stage -- routers/bookingRouter.js [2ms]
+2026-06-24 16:11:45.820 [info] > git cat-file -s 27ad156ba1b2ce22b061456e1dbf7b36931c3e2d [3ms]
+2026-06-24 16:11:46.373 [info] > git blame --root --incremental 40d220027ae43ce1563fa22b952998ece5d88957 -- routers/bookingRouter.js [3ms]
+2026-06-24 16:11:46.929 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:11:49.133 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 16:11:49.153 [info] > git show --textconv :routers/userRouter.js [9ms]
+2026-06-24 16:11:49.153 [info] > git ls-files --stage -- routers/userRouter.js [1ms]
+2026-06-24 16:11:49.162 [info] > git cat-file -s 368f62df28b82e2b5514b4ba3e7fb33b24dfe627 [1ms]
+2026-06-24 16:12:56.269 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 16:13:15.424 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:13:18.562 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:13:19.135 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:13:19.953 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 16:13:26.908 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:13:29.591 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:13:30.054 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:13:30.408 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:13:33.366 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:13:40.895 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 16:13:41.326 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 16:13:41.704 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:13:44.735 [info] > git config --get commit.template [14ms]
+2026-06-24 16:13:44.736 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2026-06-24 16:13:44.758 [info] > git status -z -uall [10ms]
+2026-06-24 16:13:44.758 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [1ms]
+2026-06-24 16:13:45.153 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 16:13:45.180 [info] > git show --textconv :routers/flightRouter.js [12ms]
+2026-06-24 16:13:45.181 [info] > git ls-files --stage -- routers/flightRouter.js [1ms]
+2026-06-24 16:13:45.197 [info] > git cat-file -s 1f5580363de9663bc95890bdd7789362b955c4f0 [7ms]
+2026-06-24 16:13:51.578 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:13:51.606 [info] > git show --textconv :routers/bookingRouter.js [12ms]
+2026-06-24 16:13:51.606 [info] > git ls-files --stage -- routers/bookingRouter.js [1ms]
+2026-06-24 16:13:51.617 [info] > git cat-file -s 27ad156ba1b2ce22b061456e1dbf7b36931c3e2d [1ms]
+2026-06-24 16:13:58.238 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 16:14:07.436 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 16:14:10.098 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 16:14:11.185 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:14:11.672 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:14:12.129 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:14:12.439 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:14:33.651 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:14:36.200 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 16:14:36.488 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:14:36.889 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:14:37.272 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 16:14:43.848 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:14:46.552 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:14:47.031 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:14:47.398 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:15:02.555 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:15:04.608 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 16:15:11.626 [info] > git config --get commit.template [19ms]
+2026-06-24 16:15:11.626 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2026-06-24 16:15:11.649 [info] > git status -z -uall [9ms]
+2026-06-24 16:15:11.651 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [2ms]
+2026-06-24 16:15:12.085 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 16:15:12.116 [info] > git show --textconv :routers/userRouter.js [14ms]
+2026-06-24 16:15:12.117 [info] > git ls-files --stage -- routers/userRouter.js [2ms]
+2026-06-24 16:15:12.136 [info] > git cat-file -s 368f62df28b82e2b5514b4ba3e7fb33b24dfe627 [8ms]
+2026-06-24 16:15:12.764 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 16:15:12.794 [info] > git show --textconv :routers/bookingRouter.js [14ms]
+2026-06-24 16:15:12.795 [info] > git ls-files --stage -- routers/bookingRouter.js [2ms]
+2026-06-24 16:15:12.812 [info] > git cat-file -s 27ad156ba1b2ce22b061456e1dbf7b36931c3e2d [5ms]
+2026-06-24 16:15:14.176 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:15:14.208 [info] > git show --textconv :routers/flightRouter.js [16ms]
+2026-06-24 16:15:14.210 [info] > git ls-files --stage -- routers/flightRouter.js [3ms]
+2026-06-24 16:15:14.234 [info] > git cat-file -s 1f5580363de9663bc95890bdd7789362b955c4f0 [7ms]
+2026-06-24 16:15:21.810 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:15:24.224 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:15:24.722 [info] > git check-ignore -v -z --stdin [4ms]
+2026-06-24 16:15:25.129 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 16:15:27.256 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:15:38.084 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 16:15:38.890 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:15:40.747 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 16:15:47.281 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 16:15:49.161 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:15:49.490 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:15:49.786 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:15:50.217 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:15:53.872 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 16:15:58.761 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:15:59.065 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 16:15:59.544 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:15:59.920 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:16:01.750 [info] > git config --get commit.template [8ms]
+2026-06-24 16:16:01.750 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [1ms]
+2026-06-24 16:16:01.767 [info] > git status -z -uall [8ms]
+2026-06-24 16:16:01.768 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [1ms]
+2026-06-24 16:16:02.303 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:16:02.334 [info] > git show --textconv :routers/bookingRouter.js [12ms]
+2026-06-24 16:16:02.335 [info] > git ls-files --stage -- routers/bookingRouter.js [1ms]
+2026-06-24 16:16:02.354 [info] > git cat-file -s 27ad156ba1b2ce22b061456e1dbf7b36931c3e2d [6ms]
+2026-06-24 16:16:04.793 [info] > git check-ignore -v -z --stdin [2ms]
+2026-06-24 16:16:04.824 [info] > git show --textconv :routers/userRouter.js [14ms]
+2026-06-24 16:16:04.825 [info] > git ls-files --stage -- routers/userRouter.js [1ms]
+2026-06-24 16:16:04.846 [info] > git cat-file -s 368f62df28b82e2b5514b4ba3e7fb33b24dfe627 [8ms]
+2026-06-24 16:16:06.333 [info] > git log --format=%H%n%aN%n%aE%n%at%n%ct%n%P%n%D%n%B -z --shortstat --diff-merges=first-parent -n50 --skip=0 --topo-order --decorate=full --stdin [25ms]
+2026-06-24 16:16:07.033 [info] > git merge-base main origin/main [2ms]
+2026-06-24 16:16:09.507 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/remotes/origin/main [1ms]
+2026-06-24 16:16:09.523 [info] > git log --oneline --cherry main...main@{upstream} -- [2ms]
+2026-06-24 16:16:10.613 [info] > git pull --tags origin main [1078ms]
+2026-06-24 16:16:10.613 [info] From https://github.com/fatenalahmadieh/service-booking
+ * branch            main       -> FETCH_HEAD
+   40d2200..6f656a7  main       -> origin/main
+error: Your local changes to the following files would be overwritten by merge:
+	controllers/userController.js
+Please commit your changes or stash them before you merge.
+Aborting
+2026-06-24 16:16:10.640 [info] > git config --get commit.template [13ms]
+2026-06-24 16:16:10.640 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [1ms]
+2026-06-24 16:16:10.666 [info] > git status -z -uall [14ms]
+2026-06-24 16:16:10.667 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [2ms]
+2026-06-24 16:16:10.679 [info] > git merge-base refs/heads/main refs/remotes/origin/main [1ms]
+2026-06-24 16:16:10.698 [info] > git diff --raw --numstat --diff-filter=ADMR -z --find-renames=50% 40d220027ae43ce1563fa22b952998ece5d88957...refs/remotes/origin/main -- [10ms]
+2026-06-24 16:16:10.708 [info] > git log --format=%H%n%aN%n%aE%n%at%n%ct%n%P%n%D%n%B -z --shortstat --diff-merges=first-parent -n50 --skip=0 --topo-order --decorate=full --stdin [11ms]
+2026-06-24 16:16:10.728 [info] > git merge-base main origin/main [2ms]
+2026-06-24 16:16:16.764 [info] > git config --get commit.template [8ms]
+2026-06-24 16:16:16.764 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [1ms]
+2026-06-24 16:16:16.779 [info] > git status -z -uall [7ms]
+2026-06-24 16:16:16.780 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [1ms]
+2026-06-24 16:16:38.376 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:16:38.401 [info] > git show --textconv :controllers/authController.js [12ms]
+2026-06-24 16:16:38.401 [info] > git ls-files --stage -- controllers/authController.js [1ms]
+2026-06-24 16:16:38.413 [info] > git cat-file -s 5f53b14c5080e5200c854eaf301aa706cd475d91 [2ms]
+2026-06-24 16:16:44.022 [info] > git check-ignore -v -z --stdin [0ms]
+2026-06-24 16:16:44.045 [info] > git show --textconv :routers/bookingRouter.js [12ms]
+2026-06-24 16:16:44.046 [info] > git ls-files --stage -- routers/bookingRouter.js [2ms]
+2026-06-24 16:16:44.062 [info] > git cat-file -s 27ad156ba1b2ce22b061456e1dbf7b36931c3e2d [7ms]
+2026-06-24 16:16:45.493 [info] > git check-ignore -v -z --stdin [3ms]
+2026-06-24 16:16:45.516 [info] > git show --textconv :routers/flightRouter.js [8ms]
+2026-06-24 16:16:45.516 [info] > git ls-files --stage -- routers/flightRouter.js [0ms]
+2026-06-24 16:16:45.529 [info] > git cat-file -s 1f5580363de9663bc95890bdd7789362b955c4f0 [5ms]
+2026-06-24 16:16:45.929 [info] > git check-ignore -v -z --stdin [1ms]
+2026-06-24 16:16:45.952 [info] > git show --textconv :routers/userRouter.js [10ms]
+2026-06-24 16:16:45.952 [info] > git ls-files --stage -- routers/userRouter.js [0ms]
+2026-06-24 16:16:45.960 [info] > git cat-file -s 368f62df28b82e2b5514b4ba3e7fb33b24dfe627 [1ms]
+2026-06-24 16:16:46.783 [info] > git log --format=%H%n%aN%n%aE%n%at%n%ct%n%P%n%D%n%B -z --shortstat --diff-merges=first-parent -n50 --skip=0 --topo-order --decorate=full --stdin [11ms]
+2026-06-24 16:16:46.805 [info] > git merge-base main origin/main [1ms]
 
-const userSchema = new Schema({
-    firstName : {
-        type: String,
-        required: true
-    },
-    lastName : {
-        type: String,
-        required: true
-    },
-    nationality: {
-        type: String,
-        required: true
-    },
-    dateOfBirth:{
-        type: Date
-    },
-    userType:{
-        enum:['Pilot','"Passenger',''],
-        required:true,
-    },
-    pilot:{
-        rank: {
-            type: String,
-            enum: ['Captain', 'First Officer', 'Second Officer'],
-            required: true
-            },
-        licenseNumber: {
-            type: String,
-            required: true
-            }
-    },
-    passenger:{
-
-    },
-    host:{
-        subRole: {
-            type: String,
-            enum: ['Purser', 'Senior Cabin Crew', 'Flight Attendant', 'Ground Host'],
-            default: 'Flight Attendant',
-            required: true
-        },
-        assignedCabinClass: {
-            type: String,
-            enum: ['Economy', 'Business', 'First Class', 'All'],
-            default: 'Economy'
-        },
-        languagesSpoken: {
-            type: [String], 
-            required: true,
-            default: ['English']
-        },
-        certificationExpiry: {
-            type: Date,
-            description: "Tracks when their mandatory flight safety/medical certs expire"
-        },
-        status: {
-            type: String,
-            enum: ['On Duty', 'Off Duty', 'On Leave', 'Standby'],
-            default: 'Off Duty'
-        },
-    },
-    admin:{
-        role: {
-            type: String,
-            enum: ['SuperAdmin', 'Manager', 'Support'],
-            default: 'Support',
-            required: true
-        },
-        permissions: {
-            type: [String], 
-            default: []
-        },
-        
-        lastLogin: {
-            type: Date
-        },
-        assignedRegion: {
-            type: String,
-            description: "Limits their admin actions to a specific city or country"
-        }
-    },
-},
-{ timestamps: true }
-);
-module.exports = mongoose.model("Passenger", passengerSchema);

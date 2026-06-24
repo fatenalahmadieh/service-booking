@@ -43,28 +43,24 @@ const userSchema = new Schema({
     ,
     userType:{
         type: String,
-        enum:['Pilot','Passenger','host','admin'],
+        enum:['Pilot','Passenger','Host','Admin'],
         required:true,
     },
     pilot:{
         rank: {
             type: String,
             enum: ['Captain', 'First Officer', 'Second Officer'],
-            required: true
             },
         licenseNumber: {
             type: String,
-            required: true
             }
     },
     passenger:{
         passportNumber: {
                 type: String,
-                required: true
             },
             passportExpiryDate: {
                 type: Date,
-                required: true
             },
     },
     host:{
@@ -72,7 +68,6 @@ const userSchema = new Schema({
             type: String,
             enum: ['Purser', 'Senior Cabin Crew', 'Flight Attendant', 'Ground Host'],
             default: 'Flight Attendant',
-            required: true
         },
         assignedCabinClass: {
             type: String,
@@ -81,7 +76,6 @@ const userSchema = new Schema({
         },
         languagesSpoken: {
             type: [String], 
-            required: true,
             default: ['English']
         },
         certificationExpiry: {
@@ -99,7 +93,6 @@ const userSchema = new Schema({
             type: String,
             enum: ['SuperAdmin', 'Manager', 'Support'],
             default: 'Support',
-            required: true
         },
         permissions: {
             type: [String], 
@@ -132,5 +125,31 @@ userSchema.pre("save",async function(next){
 userSchema.methods.checkPassword = async function(candidatePassword,userPassword){
     return await bcrypt.compare(candidatePassword,userPassword);
 }
+// userSchema.js (Add this below your pre-save hook and above checkPassword)
 
+userSchema.methods.passwordChangedAfterTokenIssued = function(JWTTimestamp) {
+    if (this.passwordChangedAt) {
+        // Convert the date to a timestamp in seconds to match the JWT `iat` format
+        const changedTimestamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10);
+        
+        // If the token was issued BEFORE the password was changed, return true
+        return JWTTimestamp < changedTimestamp; 
+    }
+
+    // False means the password was NOT changed after the token was issued
+    return false;
+};// userSchema.js (Add this below your pre-save hook and above checkPassword)
+
+userSchema.methods.passwordChangedAfterTokenIssued = function(JWTTimestamp) {
+    if (this.passwordChangedAt) {
+        // Convert the date to a timestamp in seconds to match the JWT `iat` format
+        const changedTimestamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10);
+        
+        // If the token was issued BEFORE the password was changed, return true
+        return JWTTimestamp < changedTimestamp; 
+    }
+
+    // False means the password was NOT changed after the token was issued
+    return false;
+};
 module.exports = mongoose.model("User", userSchema);
