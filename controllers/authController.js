@@ -58,11 +58,11 @@ exports.signUp =async (req,res)=>{
             password:req.body.password,
             passwordConfirm:req.body.passwordConfirm,
             userType: req.body.userType,
-            pilot: req.body.userType === 'pilot' ? req.body.pilot : undefined,
+            pilot: req.body.userType === 'Pilot' ? req.body.pilot : undefined,
             //3 variable error was here 0_0
-            passenger: req.body.userType === 'passenger' ? req.body.passenger : undefined,
-            host: req.body.userType === 'host' ? req.body.host : undefined,
-            admin: req.body.userType === 'admin' ? req.body.admin : undefined,
+            passenger: req.body.userType === 'Passenger' ? req.body.passenger : undefined,
+            host: req.body.userType === 'Post' ? req.body.host : undefined,
+            admin: req.body.userType === 'Admin' ? req.body.admin : undefined,
             });
         
         

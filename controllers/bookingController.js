@@ -118,7 +118,7 @@ exports.cancelBooking = async (req, res) => {
 exports.confirmBooking = async (req, res) => {
     try{
 
-            const booking = await Booking.findById(req.params["bookingId"]);
+            const booking = await Booking.findById(req.params.id);
             const flight = await Flight.findById(req.body.flightId);
             if(!booking){
                 return res
