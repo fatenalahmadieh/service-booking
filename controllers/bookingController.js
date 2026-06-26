@@ -152,6 +152,44 @@ exports.confirmBooking = async (req, res) => {
             res.status(500).json({message:err.message});
         }
 };
+// PUT /api/bookings/:bookingId/changeSeat
+// change seat booking by Id
+exports.changeSeat = async (req, res) => {
+    try{
+        const { oldSeat , newSeat } = req.body;
+        const booking = await Booking.findById(req.params.id);
+        if(!booking){
+                return res
+                .status(404)
+                .json({message: "booking is not found"});
+        };
+        // check if the old seat equal to the new seat
+        if(booking.seatNumber !== oldSeat){
+            return res
+            .status(404)
+            .json({message: "You are reserved the same seat"});
+        };
+        // check if the seat is available 
+        const seatReserved = await Booking.findOne({
+            flightId: booking.flightId,
+            seatNumber: newSeat,
+            bookingStatus: { $ne:"cancelled" },
+        });
+        if(seatReserved){
+            return res
+            .status(404)
+            .json({message: "The new seat is already reserved"});
+        };
+        // send the new booking 
+        booking.seatNumber = newSeat;
+        await booking.save();
+
+        return res.status(200).json({ message: "Booking confirmed successfully", data: booking });
+    }catch (err){
+        console.log(err);
+        res.status(500).json({message:err.message});
+    }
+};
 
 // exports.createBooking = async (req, res) => {
 //         res.status(201).json({ message: "" });
