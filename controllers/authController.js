@@ -6,10 +6,12 @@ const jwt = require("jsonwebtoken");
 const signToken = (user)=>{
     return jwt.sign(
     {
-      id: user._id,firstName:user.firstName,
+      id: user._id,
+      firstName:user.firstName,
       lastName:user.lastName,
       userType:user.userType,
-      nationality:user.nationality},
+      nationality:user.nationality
+    },
       process.env.JWT_SECRET,
       {expiresIn: process.env.JWT_EXPIRES_IN || "15m"},
     );
@@ -28,28 +30,29 @@ const createSendToken = (user,statusCode,message,res)=>{
     };
     res.status(statusCode).json({
         status:"Success",
-        token,message,
+        token,
+        message,
         data:{user:sanitizeUser}
     });
 }
 
 //Create new User POST /api/Users
-exports.signUp =async (req,res)=>{
+exports.signUp = async (req,res)=>{
     try {
         if(!validator.isEmail(req.body["email"])){
             return res.status(400).json({message:'Invalid email address!!'});
         }
-    const checkUserExistence = await User.findOne({
-        $or:[{email:req.body.email},{username:req.body.username}],
-    });
-    if(checkUserExistence){
-        return res.status(409).json({message:"User already exist!!"});
-    }
-    if(req.body.password !== req.body.passwordConfirm){
-        return res.status(400).json({message:"Please enter matching password!!"});
-    }
+        const checkUserExistence = await User.findOne({
+            $or:[{email:req.body.email},{username:req.body.username}],
+        });
+        if(checkUserExistence){
+            return res.status(409).json({message:"User already exist!!"});
+        }
+        if(req.body.password !== req.body.passwordConfirm){
+            return res.status(400).json({message:"Please enter matching password!!"});
+        }
 
-    const newUser = await User.create({
+        const newUser = await User.create({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             nationality: req.body.nationality,
@@ -59,36 +62,30 @@ exports.signUp =async (req,res)=>{
             passwordConfirm:req.body.passwordConfirm,
             userType: req.body.userType,
             pilot: req.body.userType === 'Pilot' ? req.body.pilot : undefined,
-            //3 variable error was here 0_0
-            passenger: req.body.userType === 'Passenger' ? req.body.passenger : undefined,
-            host: req.body.userType === 'Post' ? req.body.host : undefined,
+            // Automatically parses passport details and allergies if passed in passenger object
+            passenger: req.body.userType === 'Passenger' ? req.body.passenger : undefined, 
+            host: req.body.userType === 'Host' ? req.body.host : undefined, //typo: 'Post' -> 'Host'
             admin: req.body.userType === 'Admin' ? req.body.admin : undefined,
-            });
+        });
         
-        
-        return res.status(200).json({message:`User `+req.body.firstName+' has been created'});
-        }
-            catch (err) {
+        // Log user in automatically upon successful registration
+        createSendToken(newUser, 201, `User ${newUser.firstName} has been created successfully`, res);
+
+    } catch (err) {
         console.log(err);
         res.status(500).json({message:err.message});
     }
-   
-
 }
+
 //login system Post /api/Users/login
 exports.login = async (req,res)=>{
     try {
         const {email,password}=req.body;
-        const user = await User.findOne({
-            email
-        });
+        const user = await User.findOne({ email });
         if(!user || !(await user.checkPassword(password,user.password))){
-            //we dont specify what is wrong so the hijacker doesn't know whats wrong
             return res.status(401).json({message:"Wrong User Credentials"});
         }
-        //createSendToken()
         createSendToken(user,200,"You are logged in successfully!!",res);
-        //return res.status(200).json({message:"Logged in successfully"});
     } catch (err) {
         console.log(err);
         return res.status(500).json({message:err.message});
@@ -97,7 +94,6 @@ exports.login = async (req,res)=>{
 
 exports.protect = async(req,res,next)=>{
     try {
-       //1:extract tokenS
        let token;
        const authHeader = req.headers.authorization;
        if(authHeader?.startsWith("Bearer ")){
@@ -106,19 +102,15 @@ exports.protect = async(req,res,next)=>{
        if(!token){
         return res.status(401).json({message:"You are not Authenticated"});
        }
-       //2:verify token
        const decoded = await jwt.verify(token,process.env.JWT_SECRET);
 
-       //3:check user existence
        const currentUser= await User.findById(decoded.id);
        if(!currentUser){
         return res.status(401).json({message:"User no longer exists"});
        }
-       //4: verify if password not changed after token is issued
-        if (currentUser.passwordChangedAfterTokenIssued(decoded.iat)) {
-      return res.status(401).json({ message: "You recently changed your password. Please log in again" })
-    }
-       //5: Token is valid
+       if (currentUser.passwordChangedAfterTokenIssued(decoded.iat)) {
+          return res.status(401).json({ message: "You recently changed your password. Please log in again" })
+       }
        req.user =currentUser;
        next();
     } catch (err) {
@@ -131,26 +123,18 @@ exports.protect = async(req,res,next)=>{
         res.status(500).json({message:"Something went wrong!!"});
     }
 }
-// controllers/authController.js
-
-// ... your existing code ...
 
 // Middleware to restrict access based on user classification
 exports.restrictTo = (...allowedRoles) => {
     return (req, res, next) => {
-        // 1. req.user was placed here by the previous 'protect' middleware
         if (!req.user) {
             return res.status(500).json({ message: "User context missing. Ensure protect middleware is called first." });
         }
-
-        // 2. Check if the user's role is included in the allowed roles
         if (!allowedRoles.includes(req.user.userType)) {
             return res.status(403).json({ 
                 message: "Access Denied: You do not have permission to perform this action." 
             });
         }
-
-        // 3. If authorized, let them through to the controller!
         next();
     };
 };

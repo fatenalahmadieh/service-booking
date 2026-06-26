@@ -62,7 +62,23 @@ const userSchema = new Schema({
             passportExpiryDate: {
                 type: Date,
             },
+            allergies: [{
+            allergen: { 
+                type: String, 
+                required: true 
+            },
+            severity: { 
+                type: String, 
+                enum: ['Mild', 'Moderate', 'Severe'], 
+                default: 'Mild' 
+            },
+            notes: { 
+                type: String 
+            }
+        }],
+    
     },
+    
     host:{
         subRole: {
             type: String,
