@@ -10,10 +10,16 @@ const bookingSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "Flight"
         },
+        /* doesn't allow having different seats in one booking
         seatNumber: {
             type: String,
             required: true
-        },
+        },*/
+        // array of passengers booked under this request
+        seatsBooked: [{
+            passengerName: { type: String, required: true }, 
+            seatNumber: { type: String, required: true }    
+        }],
         totalPrice: {
             type: Number,
             required: true

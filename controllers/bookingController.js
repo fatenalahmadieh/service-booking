@@ -6,6 +6,20 @@ const User = require('../models/userSchema');
 // create booking
 exports.createBooking = async (req, res) => {
     try{
+        const { flightId, seatsBooked, totalPrice, payment } = req.body;
+        
+        // 1. Fetch flight to check capacity
+        const flight = await Flight.findById(flightId);
+        if (!flight) {
+            return res.status(404).json({ message: "Flight not found" });
+        }
+
+        if (flight.availableSeats < seatsBooked.length) {
+            return res.status(400).json({ message: `Not enough available seats. Only ${flight.availableSeats} left.` });
+        }
+
+        // 2. Extract just the seat numbers to check availability
+        const requestedSeatNumbers = seatsBooked.map(s => s.seatNumber);
         const booking = await Booking.findOne(
             {flightId: req.body["flightId"],
             seatNumber: req.body["seatNumber"]}
