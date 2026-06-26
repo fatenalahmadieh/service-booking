@@ -29,19 +29,19 @@ exports.createBooking = async (req, res) => {
             .status(409)
             .json({message: "booking is already found"});
     };
-    const newBooking = await Booking.create({
-            userId: req.body.userId,
-            flightId: req.body.flightId,
-            seatNumber: req.body.seatNumber,
-            totalPrice: req.body.totalPrice,
-            bookingStatus: req.body.bookingStatus,
+   const newBooking = await Booking.create({
+            userId: req.user.id, // Grabbed securely from authController.protect
+            flightId,
+            seatsBooked, // Stores the array of names and seats
+            totalPrice,
+            bookingStatus: req.body.bookingStatus || "pending",
             payment: {
-                amount: req.body.payment.amount,
-                paymentMethod: req.body.payment.paymentMethod,
-                paymentStatus: req.body.payment.paymentStatus,
-                transactionId: req.body.payment.transactionId
+                amount: payment.amount,
+                paymentMethod: payment.paymentMethod,
+                paymentStatus: payment.paymentStatus,
+                transactionId: payment.transactionId
             }
-    });
+        });
     return res.status(201).json({ data: newBooking,  message: "Booking created successfully" });
     }catch (err){
         console.log(err);
