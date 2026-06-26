@@ -163,6 +163,12 @@ exports.changeSeat = async (req, res) => {
                 .status(404)
                 .json({message: "booking is not found"});
         };
+        // check if the user is the person who made the booking.
+        if(booking.userId.toString() !== req.user.id){
+            return res
+            .status(404)
+            .json({message: "You are ot allowed to change this booking."});
+        };
         // check if the old seat equal to the new seat
         if(booking.seatNumber !== oldSeat){
             return res
