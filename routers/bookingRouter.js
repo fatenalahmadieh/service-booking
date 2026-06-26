@@ -13,5 +13,7 @@ router.get("/users/:id/bookings",authController.protect,
     authController.restrictTo('Passenger'), bookingController.getUserBookings);
 router.put("/bookings/:id/cancel", authController.protect, 
     authController.restrictTo('Passenger'),bookingController.cancelBooking);
+router.put("/api/bookings/:bookingId/confirm", authController.protect, 
+    authController.restrictTo('Passenger'),bookingController.confirmBooking);
 
 module.exports = router;

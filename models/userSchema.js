@@ -138,18 +138,7 @@ userSchema.methods.passwordChangedAfterTokenIssued = function(JWTTimestamp) {
 
     // False means the password was NOT changed after the token was issued
     return false;
-};// userSchema.js (Add this below your pre-save hook and above checkPassword)
-
-userSchema.methods.passwordChangedAfterTokenIssued = function(JWTTimestamp) {
-    if (this.passwordChangedAt) {
-        // Convert the date to a timestamp in seconds to match the JWT `iat` format
-        const changedTimestamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10);
-        
-        // If the token was issued BEFORE the password was changed, return true
-        return JWTTimestamp < changedTimestamp; 
-    }
-
-    // False means the password was NOT changed after the token was issued
-    return false;
 };
+
+
 module.exports = mongoose.model("User", userSchema);

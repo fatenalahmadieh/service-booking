@@ -38,7 +38,7 @@ exports.createFlight = async (req, res) => {
         return res.status(201).json({ data: newFlight,  message: "Flight created successfully" });
     }catch (err){
         console.log(err);
-        res.status(500).json({message:err.message});
+        res.status(422).json({message:err.message});
     }
 };
 
