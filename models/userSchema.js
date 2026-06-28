@@ -78,6 +78,24 @@ const userSchema = new Schema({
         }],
     
     },
+    // --- ADDED FOR LOYALTY PROGRAM ---
+        loyaltyProgram: {
+            frequentFlyerNumber: {
+                type: String,
+                unique: true,
+                sparse: true // Enforces uniqueness only for accounts with this field
+            },
+            pointsBalance: {
+                type: Number,
+                default: 0
+            },
+            tier: {
+                type: String,
+                enum: ['Bronze', 'Silver', 'Gold', 'Platinum'],
+                default: 'Bronze'
+            }
+        }
+    ,
     
     host:{
         subRole: {
@@ -126,16 +144,24 @@ const userSchema = new Schema({
 },
 { timestamps: true }
 );
-//Pre hook for the password and hashing the password
+//Pre hook for the password and hashing the password + generating loyalty number
 userSchema.pre("save",async function(next){
  try {
-    if(!this.isModified("password")){
-        next();
+    // 1. Password hashing
+    if(this.isModified("password")){
+        this.password = await bcrypt.hash(this.password, 12);
+        this.passwordConfirm = undefined;
     }
-    this.password= await bcrypt.hash(this.password,12);
-    this.passwordConfirm = undefined;
- } catch (error) {
-    console.log(error)
+    
+    // 2. Loyalty Number Generation (Only for new Passengers)
+    if (this.userType === 'Passenger' && !this.passenger.loyaltyProgram.frequentFlyerNumber) {
+        const randomNumber = Math.floor(100000 + Math.random() * 900000);
+        this.passenger.loyaltyProgram.frequentFlyerNumber = `FLY-${randomNumber}`;
+    }
+
+    next();
+ } catch (err) {
+    next(err);
  }
 });
 userSchema.methods.checkPassword = async function(candidatePassword,userPassword){
