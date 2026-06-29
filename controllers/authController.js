@@ -96,7 +96,7 @@ exports.protect = async(req,res,next)=>{
     try {
        let token;
        const authHeader = req.headers.authorization;
-       if(authHeader?.startsWith("Bearer ")){
+       if(authHeader.startsWith("Bearer ")){
         token = authHeader.split(" ")[1]
        } ;
        if(!token){
