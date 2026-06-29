@@ -2,12 +2,35 @@ const Booking = require('../models/bookingSchema');
 const Flight = require('../models/flightSchema');
 const User = require('../models/userSchema');
 
+const calculateBaggageCharges = (seatsBooked, flight) => {
+    const allowance = flight.baggageAllowanceKg || 20;
+    const feePerKg = flight.overweightFeePerKg || 10;
+    let baggageFeeTotal = 0;
+    const enrichedSeats = seatsBooked.map(seat => {
+        const baggageWeightKg = Number(seat.baggageWeightKg || 0);
+        const extraBaggageKg = Math.max(0, baggageWeightKg - allowance);
+        const extraBaggageFee = extraBaggageKg * feePerKg;
+        baggageFeeTotal += extraBaggageFee;
+        return {
+            ...seat,
+            baggageWeightKg,
+            extraBaggageKg,
+            extraBaggageFee
+        };
+    });
+    return { baggageFeeTotal, enrichedSeats };
+};
+
 // POST /api/bookings
 // create group/single booking
 exports.createBooking = async (req, res) => {
     try {
         const { flightId, seatsBooked, totalPrice, payment } = req.body;
         
+        if (!Array.isArray(seatsBooked) || seatsBooked.length === 0) {
+            return res.status(400).json({ message: "At least one passenger seat must be provided." });
+        }
+
         // 1. Fetch flight to check capacity
         const flight = await Flight.findById(flightId);
         if (!flight) {
@@ -16,6 +39,16 @@ exports.createBooking = async (req, res) => {
 
         if (flight.availableSeats < seatsBooked.length) {
             return res.status(400).json({ message: `Not enough available seats. Only ${flight.availableSeats} left.` });
+        }
+
+        const { baggageFeeTotal, enrichedSeats } = calculateBaggageCharges(seatsBooked, flight);
+        const computedTotalPrice = (flight.price * seatsBooked.length) + baggageFeeTotal;
+        const finalTotalPrice = totalPrice !== undefined ? Number(totalPrice) : computedTotalPrice;
+
+        if (finalTotalPrice < computedTotalPrice) {
+            return res.status(400).json({
+                message: `Total price must cover flight fare plus baggage fees. Minimum ${computedTotalPrice}.`
+            });
         }
 
         // 2. Extract just the seat numbers to check availability
@@ -36,8 +69,8 @@ exports.createBooking = async (req, res) => {
         const newBooking = await Booking.create({
             userId: req.user.id, // Securely grabbed from authController.protect
             flightId,
-            seatsBooked, 
-            totalPrice,
+            seatsBooked: enrichedSeats,
+            totalPrice: finalTotalPrice,
             bookingStatus: req.body.bookingStatus || "pending",
             payment: {
                 amount: payment.amount,
@@ -166,11 +199,62 @@ exports.confirmBooking = async (req, res) => {
             } else {
                 user.passenger.loyaltyProgram.tier = 'Bronze';
             }
-
+            user.markModified('passenger');
             await user.save();
         }
 
         return res.status(200).json({ message: "Booking confirmed successfully", data: booking });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: err.message });
+    }
+};
+
+// PUT /api/bookings/:id/purchase-baggage
+exports.purchaseExtraBaggage = async (req, res) => {
+    try {
+        const { seatNumber, additionalKg } = req.body;
+        if (!seatNumber || typeof additionalKg !== 'number' || additionalKg <= 0) {
+            return res.status(400).json({ message: "seatNumber and positive additionalKg are required." });
+        }
+
+        const booking = await Booking.findById(req.params.id);
+        if (!booking) {
+            return res.status(404).json({ message: "Booking not found" });
+        }
+        if (booking.userId.toString() !== req.user.id) {
+            return res.status(403).json({ message: "You are not allowed to update this booking." });
+        }
+        if (booking.bookingStatus === 'cancelled') {
+            return res.status(400).json({ message: "Cannot purchase baggage for a cancelled booking." });
+        }
+
+        const flight = await Flight.findById(booking.flightId);
+        if (!flight) {
+            return res.status(404).json({ message: "Flight not found" });
+        }
+
+        const seat = booking.seatsBooked.find(s => s.seatNumber === seatNumber);
+        if (!seat) {
+            return res.status(404).json({ message: "Passenger seat not found in booking." });
+        }
+
+        const allowance = flight.baggageAllowanceKg || 20;
+        const feePerKg = flight.overweightFeePerKg || 10;
+        const currentWeight = Number(seat.baggageWeightKg || 0);
+        const newWeight = currentWeight + additionalKg;
+        const newExtraBaggageKg = Math.max(0, newWeight - allowance);
+        const newExtraBaggageFee = newExtraBaggageKg * feePerKg;
+        const oldExtraBaggageFee = Number(seat.extraBaggageFee || 0);
+
+        seat.baggageWeightKg = newWeight;
+        seat.extraBaggageKg = newExtraBaggageKg;
+        seat.extraBaggageFee = newExtraBaggageFee;
+
+        booking.totalPrice = Number(booking.totalPrice) + (newExtraBaggageFee - oldExtraBaggageFee);
+
+        await booking.save();
+        return res.status(200).json({ message: "Extra baggage purchased successfully", data: booking });
     } catch (err) {
         console.log(err);
         res.status(500).json({ message: err.message });

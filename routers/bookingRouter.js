@@ -13,8 +13,10 @@ router.get("/users/:id/bookings",authController.protect,
     authController.restrictTo('Passenger'), bookingController.getUserBookings);
 router.put("/bookings/:id/cancel", authController.protect, 
     authController.restrictTo('Passenger'),bookingController.cancelBooking);
-router.put("/api/bookings/:bookingId/confirm", authController.protect, 
+router.put("/bookings/:id/confirm", authController.protect, 
     authController.restrictTo('Passenger'),bookingController.confirmBooking);
+router.put("/bookings/:id/purchase-baggage", authController.protect, 
+    authController.restrictTo('Passenger'), bookingController.purchaseExtraBaggage);
 router.put("/bookings/:id/changeSeat", authController.protect, 
     authController.restrictTo('Passenger','Admin'),bookingController.changeSeat);
 

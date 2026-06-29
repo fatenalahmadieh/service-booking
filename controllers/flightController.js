@@ -27,6 +27,8 @@ exports.createFlight = async (req, res) => {
             arrivalTime: req.body["arrivalTime"],
             price: req.body["price"],
             availableSeats: req.body["availableSeats"],
+            baggageAllowanceKg: req.body["baggageAllowanceKg"] || 20,
+            overweightFeePerKg: req.body["overweightFeePerKg"] || 10,
             airport: {
                 name: airportData.name,
                 code: airportData.code,
@@ -96,6 +98,8 @@ exports.updateFlightById = async (req, res) => {
                 "airport.code": req.body["airport.code"],
                 "airport.city": req.body["airport.city"],
                 "airport.country": req.body["airport.country"],
+                baggageAllowanceKg: req.body["baggageAllowanceKg"],
+                overweightFeePerKg: req.body["overweightFeePerKg"],
                 status: req.body["status"]
             },
             { new: true }

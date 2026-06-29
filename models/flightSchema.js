@@ -33,6 +33,14 @@ const flightSchema=new Schema({
         type:Number,
         required:true,
     },
+    baggageAllowanceKg: {
+        type: Number,
+        default: 20
+    },
+    overweightFeePerKg: {
+        type: Number,
+        default: 10
+    },
     airport:{
         name:{
             type: String,

@@ -17,8 +17,11 @@ const bookingSchema = new mongoose.Schema(
         },*/
         // array of passengers booked under this request
         seatsBooked: [{
-            passengerName: { type: String, required: true }, 
-            seatNumber: { type: String, required: true }    
+            passengerName: { type: String, required: true },
+            seatNumber: { type: String, required: true },
+            baggageWeightKg: { type: Number, default: 0 },
+            extraBaggageKg: { type: Number, default: 0 },
+            extraBaggageFee: { type: Number, default: 0 }
         }],
         totalPrice: {
             type: Number,

@@ -30,14 +30,11 @@ const userSchema = new Schema({
          type:String,
         required:true,
         trim:true,
-        maxLength:12,
     }
     ,
     passwordConfirm:{
          type:String,
-        required:true,
-        trim:true,
-        maxLength:12,
+            trim:true,
     },
     passwordChangedAt:Date
     ,
@@ -46,39 +43,108 @@ const userSchema = new Schema({
         enum:['Pilot','Passenger','Host','Admin'],
         required:true,
     },
-    pilot:{
-        rank: {
-            type: String,
-            enum: ['Captain', 'First Officer', 'Second Officer'],
+    pilot: {
+        type: {
+            rank: {
+                type: String,
+                enum: ['Captain', 'First Officer', 'Second Officer'],
             },
-        licenseNumber: {
-            type: String,
+            licenseNumber: {
+                type: String,
             }
+        },
+        default: undefined
     },
-    passenger:{
-        passportNumber: {
+    passenger: {
+        type: {
+            passportNumber: {
                 type: String,
             },
             passportExpiryDate: {
                 type: Date,
             },
             allergies: [{
-            allergen: { 
-                type: String, 
-                required: true 
-            },
-            severity: { 
-                type: String, 
-                enum: ['Mild', 'Moderate', 'Severe'], 
-                default: 'Mild' 
-            },
-            notes: { 
-                type: String 
+                allergen: { 
+                    type: String, 
+                    required: true 
+                },
+                severity: { 
+                    type: String, 
+                    enum: ['Mild', 'Moderate', 'Severe'], 
+                    default: 'Mild' 
+                },
+                notes: { 
+                    type: String 
+                }
+            }],
+            loyaltyProgram: {
+                frequentFlyerNumber: {
+                    type: String,
+                    unique: true,
+                    sparse: true // Enforces uniqueness only for accounts with this field
+                },
+                pointsBalance: {
+                    type: Number,
+                    default: 0
+                },
+                tier: {
+                    type: String,
+                    enum: ['Bronze', 'Silver', 'Gold', 'Platinum'],
+                    default: 'Bronze'
+                }
             }
-        }],
-    
+        },
+        default: undefined
     },
-    // --- ADDED FOR LOYALTY PROGRAM ---
+    host: {
+        type: {
+            subRole: {
+                type: String,
+                enum: ['Purser', 'Senior Cabin Crew', 'Flight Attendant', 'Ground Host'],
+                default: 'Flight Attendant',
+            },
+            assignedCabinClass: {
+                type: String,
+                enum: ['Economy', 'Business', 'First Class', 'All'],
+                default: 'Economy'
+            },
+            languagesSpoken: {
+                type: [String], 
+                default: ['English']
+            },
+            certificationExpiry: {
+                type: Date,
+                description: "Tracks when their mandatory flight safety/medical certs expire"
+            },
+            status: {
+                type: String,
+                enum: ['On Duty', 'Off Duty', 'On Leave', 'Standby'],
+                default: 'Off Duty'
+            }
+        },
+        default: undefined
+    },
+    admin: {
+        type: {
+            role: {
+                type: String,
+                enum: ['SuperAdmin', 'Manager', 'Support'],
+                default: 'Support',
+            },
+            permissions: {
+                type: [String], 
+                default: []
+            },
+            lastLogin: {
+                type: Date
+            },
+            assignedRegion: {
+                type: String,
+                description: "Limits their admin actions to a specific city or country"
+            }
+        },
+        default: undefined
+    },
         loyaltyProgram: {
             frequentFlyerNumber: {
                 type: String,
@@ -96,73 +162,32 @@ const userSchema = new Schema({
             }
         }
     ,
-    
-    host:{
-        subRole: {
-            type: String,
-            enum: ['Purser', 'Senior Cabin Crew', 'Flight Attendant', 'Ground Host'],
-            default: 'Flight Attendant',
-        },
-        assignedCabinClass: {
-            type: String,
-            enum: ['Economy', 'Business', 'First Class', 'All'],
-            default: 'Economy'
-        },
-        languagesSpoken: {
-            type: [String], 
-            default: ['English']
-        },
-        certificationExpiry: {
-            type: Date,
-            description: "Tracks when their mandatory flight safety/medical certs expire"
-        },
-        status: {
-            type: String,
-            enum: ['On Duty', 'Off Duty', 'On Leave', 'Standby'],
-            default: 'Off Duty'
-        },
     },
-    admin:{
-        role: {
-            type: String,
-            enum: ['SuperAdmin', 'Manager', 'Support'],
-            default: 'Support',
-        },
-        permissions: {
-            type: [String], 
-            default: []
-        },
-        
-        lastLogin: {
-            type: Date
-        },
-        assignedRegion: {
-            type: String,
-            description: "Limits their admin actions to a specific city or country"
-        }
-    },
-},
+
+
 { timestamps: true }
 );
 //Pre hook for the password and hashing the password + generating loyalty number
-userSchema.pre("save",async function(next){
- try {
+// Pre hook for the password, hashing the password, and generating loyalty number
+userSchema.pre("save", async function() {
     // 1. Password hashing
-    if(this.isModified("password")){
+    if (this.isModified("password")) {
         this.password = await bcrypt.hash(this.password, 12);
         this.passwordConfirm = undefined;
     }
     
     // 2. Loyalty Number Generation (Only for new Passengers)
-    if (this.userType === 'Passenger' && !this.passenger.loyaltyProgram.frequentFlyerNumber) {
-        const randomNumber = Math.floor(100000 + Math.random() * 900000);
-        this.passenger.loyaltyProgram.frequentFlyerNumber = `FLY-${randomNumber}`;
-    }
+    if (this.userType === 'Passenger') {
+        // Initialize the object safely so we don't hit an 'undefined' error
+        if (!this.passenger.loyaltyProgram) {
+            this.passenger.loyaltyProgram = {};
+        }
 
-    next();
- } catch (err) {
-    next(err);
- }
+        if (!this.passenger.loyaltyProgram.frequentFlyerNumber) {
+            const randomNumber = Math.floor(100000 + Math.random() * 900000);
+            this.passenger.loyaltyProgram.frequentFlyerNumber = `FLY-${randomNumber}`;
+        }
+    }
 });
 userSchema.methods.checkPassword = async function(candidatePassword,userPassword){
     return await bcrypt.compare(candidatePassword,userPassword);
