@@ -25,14 +25,26 @@ const flightSchema=new Schema({
         type:Date,
         required:true,
     },
-    price: {
-        type: Number,
-        required:true
-    },
-    availableSeats:{
-        type:Number,
-        required:true,
-    },
+    seats: [{
+        seatNumber: { 
+            type: String, 
+            required: true ,
+        },
+        ticketClass: {
+            type: String,
+            enum: ['Economy', 'Premium Economy', 'Business Class', 'First Class'],
+            required: true,
+        },
+        price: { 
+            type: Number, 
+            required: true ,
+        },
+        status: {
+            type: String,
+            enum: ['available', 'reserved', 'booked'],
+            default: 'available',
+        },
+    }],
     baggageAllowanceKg: {
         type: Number,
         default: 20

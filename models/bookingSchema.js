@@ -19,6 +19,15 @@ const bookingSchema = new mongoose.Schema(
         seatsBooked: [{
             passengerName: { type: String, required: true },
             seatNumber: { type: String, required: true },
+            ticketClass: {
+                type: String,
+                enum: ['Economy', 'Premium Economy', 'Business Class', 'First Class'],
+                required: true
+            },
+            seatPrice: { 
+                type: Number, 
+                required: true 
+            },
             baggageWeightKg: { type: Number, default: 0 },
             extraBaggageKg: { type: Number, default: 0 },
             extraBaggageFee: { type: Number, default: 0 }

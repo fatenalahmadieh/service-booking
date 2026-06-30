@@ -145,23 +145,6 @@ const userSchema = new Schema({
         },
         default: undefined
     },
-        loyaltyProgram: {
-            frequentFlyerNumber: {
-                type: String,
-                unique: true,
-                sparse: true // Enforces uniqueness only for accounts with this field
-            },
-            pointsBalance: {
-                type: Number,
-                default: 0
-            },
-            tier: {
-                type: String,
-                enum: ['Bronze', 'Silver', 'Gold', 'Platinum'],
-                default: 'Bronze'
-            }
-        }
-    ,
     },
 
 
