@@ -183,27 +183,13 @@ exports.confirmBooking = async (req, res) => {
             $inc: { availableSeats: -seatsToDeduct }
         });
 
-        // Loyalty Rewards Calculation
-        const user = await User.findById(booking.userId);
-        if (user && user.userType === 'Passenger') {
-            const pointsEarned = Math.round(booking.totalPrice * 0.10);
-            user.passenger.loyaltyProgram.pointsBalance += pointsEarned;
-
-            const currentPoints = user.passenger.loyaltyProgram.pointsBalance;
-            if (currentPoints >= 1000) {
-                user.passenger.loyaltyProgram.tier = 'Platinum';
-            } else if (currentPoints >= 500) {
-                user.passenger.loyaltyProgram.tier = 'Gold';
-            } else if (currentPoints >= 200) {
-                user.passenger.loyaltyProgram.tier = 'Silver';
-            } else {
-                user.passenger.loyaltyProgram.tier = 'Bronze';
-            }
-            user.markModified('passenger');
-            await user.save();
-        }
-
-        return res.status(200).json({ message: "Booking confirmed successfully", data: booking });
+       //Removed the loyalty program into a separate function
+       //update the loyalty points by calling loyalty service util
+       const { updatePassengerLoyalty } = require('../utils/loyaltyService');
+       const loyaltySummary = await updatePassengerLoyalty(booking.userId, booking.totalPrice);
+        return res.status(200).json({ message: "Booking confirmed successfully", data:{ booking,
+            loyaltySummary: loyaltySummary || { message: "Loyalty program not applicable for this user type" }
+        } });
     } catch (err) {
         console.log(err);
         res.status(500).json({ message: err.message });

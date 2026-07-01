@@ -11,5 +11,5 @@ router.put("/flights/:id",authController.protect,
     authController.restrictTo('Admin'), flightController.updateFlightById);
 router.delete("/flights/:id", authController.protect, 
     authController.restrictTo('Admin'),flightController.deleteFlight);
-
+router.get("/flights/:id/seats",authController.protect,flightController.returnAllSeats);
 module.exports = router;

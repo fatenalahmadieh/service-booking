@@ -7,6 +7,7 @@
 const flightSchema = require('../models/flightSchema');
 const Flight = require('../models/flightSchema');
 
+
 // POST   /api/flights 
 // Create flights
 exports.createFlight = async (req, res) => {
@@ -128,3 +129,54 @@ exports.deleteFlight = async (req, res) => {
         res.status(500).json({message:err.message});
     }
 };
+
+// GET /api/flights/:id/seats
+exports.returnAllSeats = async (req,res)=>{
+    try {
+        const flightId = req.params.id;
+
+        //1.verify flight exists
+        const flight = await Flight.findById(flightId);
+        if(!flight){
+            return res.status(404).json({message:"Flight not found"});
+
+        }
+        //2.fetch all active booking for this flight
+        const activeBookings = await bookingSchema.find({
+            flightId,bookingStatus:{$ne:"cancelled"}
+        });
+        //3. Extract all seat number that are currently full
+        const occupiedSeats = [];
+        activeBookings.forEach(booking =>{
+            if(booking.seatsBooked){
+                booking.seatsBooked.forEach(seatObk =>{
+                    occupiedSeats.push(seatObj.seatNumber);
+                });
+            }
+        });
+       // 4. Map over the flight's physical seat blueprint to attach "isOccupied"
+       const completeSeatMap = flight.seats.map(seat =>{
+        return{
+            seatNumber: seat.seatNumber,
+            ticketClass: seat.ticketClass,
+            price: seat.price,
+            //isOccupied when number exists == taken
+            isOccupied: occupiedSeatNumbers.includes(seat.seatNumber)
+        };
+       });
+       //5:return the seats
+      // 5. Send back the highly detailed seat map response
+        return res.status(200).json({
+            flightNumber: flight.flightNumber,
+            airline: flight.airline,
+            mealsAvailable: flight.mealsByClass, // Helpful for the frontend UI!
+            totalPlaneSeats: flight.seats.length,
+            occupiedCount: occupiedSeatNumbers.length,
+            availableCount: flight.seats.length - occupiedSeatNumbers.length,
+            seatMap: completeSeatMap
+        });
+    } catch (err) {
+        console.log(err)
+       return res.status(500).json({message:err.message})
+    }
+}
