@@ -45,6 +45,24 @@ const flightSchema=new Schema({
             default: 'available',
         },
     }],
+    mealsByClass: {
+        Economy: { 
+            type: [String], 
+            default: ['Salad', 'Chicken', 'Fruit'] 
+        },
+        'Premium Economy': { 
+            type: [String], 
+            default: ['Salad', 'Beef', 'Ice cream'] 
+        },
+        'Business Class': { 
+            type: [String], 
+            default: ['Juice', 'Steak', 'Pasta'] 
+        },
+        'First Class': { 
+            type: [String], 
+            default: ['Salad', 'Steak', 'Lobster'] 
+        }
+    },
     baggageAllowanceKg: {
         type: Number,
         default: 20

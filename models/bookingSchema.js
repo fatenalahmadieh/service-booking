@@ -24,6 +24,10 @@ const bookingSchema = new mongoose.Schema(
                 enum: ['Economy', 'Premium Economy', 'Business Class', 'First Class'],
                 required: true
             },
+            mealType: { 
+                type: String, 
+                default: 'Standard' 
+            },
             seatPrice: { 
                 type: Number, 
                 required: true 
